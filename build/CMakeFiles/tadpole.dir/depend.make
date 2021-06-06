@@ -56,6 +56,17 @@ CMakeFiles/tadpole.dir/src/mutex.cc.o: ../src/singleton.hpp
 CMakeFiles/tadpole.dir/src/mutex.cc.o: ../src/utils.h
 CMakeFiles/tadpole.dir/src/mutex.cc.o: ../src/mutex.cc
 
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../3rd/include/co/co_routine.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../3rd/include/yaml/yaml.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/mutex.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/singleton.hpp
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/utils.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/address.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/config.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/log.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/tcpServer.cc
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/tcpServer.h
+
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/log.h
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/mutex.h
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/singleton.hpp

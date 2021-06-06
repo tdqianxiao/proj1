@@ -26,6 +26,7 @@ set(LIB_SRC
     src/mutex.cc
     src/thread.cc
     src/address.cc
+    src/tcpServer.cc
     )
 
 #添加动态库

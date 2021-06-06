@@ -26,3 +26,5 @@ CXX_INCLUDES = -I/home/xxx/proj1/. -I/home/xxx/proj1/./3rd/include/lua54 -I/home
 
 # Custom defines: CMakeFiles/tadpole.dir/src/address.cc.o_DEFINES = __FILE__="src/address.cc"
 
+# Custom defines: CMakeFiles/tadpole.dir/src/tcpServer.cc.o_DEFINES = __FILE__="src/tcpServer.cc"
+

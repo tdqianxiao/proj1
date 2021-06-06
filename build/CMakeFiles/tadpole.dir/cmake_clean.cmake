@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/tadpole.dir/src/luaRegister.cc.o"
   "CMakeFiles/tadpole.dir/src/luaState.cc.o"
   "CMakeFiles/tadpole.dir/src/mutex.cc.o"
+  "CMakeFiles/tadpole.dir/src/tcpServer.cc.o"
   "CMakeFiles/tadpole.dir/src/thread.cc.o"
   "CMakeFiles/tadpole.dir/src/utils.cc.o"
 )

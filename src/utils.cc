@@ -82,6 +82,7 @@ namespace tadpole{
         std::shared_ptr<int> printer(new int,[begin](void * ptr){
             uint32_t tm = duration_cast<microseconds>(high_resolution_clock::now() - begin).count() / 1000;
             TADPOLE_LOG_INFO(logger) << "use time : "<< tm << " ms !";
+            free(ptr);
         });
         return printer;
     }

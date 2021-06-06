@@ -1,0 +1,10 @@
+tcp:
+   address: 
+      - 
+         ip: 192.168.247.128
+         port: 9000
+      - 
+         ip: 127.0.0.1 
+         port: 9000
+      - 
+         unix: /tmp/tadpole.sock

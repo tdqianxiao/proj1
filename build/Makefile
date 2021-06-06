@@ -396,6 +396,33 @@ src/mutex.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/mutex.cc.s
 .PHONY : src/mutex.cc.s
 
+src/tcpServer.o: src/tcpServer.cc.o
+
+.PHONY : src/tcpServer.o
+
+# target to build an object file
+src/tcpServer.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/tcpServer.cc.o
+.PHONY : src/tcpServer.cc.o
+
+src/tcpServer.i: src/tcpServer.cc.i
+
+.PHONY : src/tcpServer.i
+
+# target to preprocess a source file
+src/tcpServer.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/tcpServer.cc.i
+.PHONY : src/tcpServer.cc.i
+
+src/tcpServer.s: src/tcpServer.cc.s
+
+.PHONY : src/tcpServer.s
+
+# target to generate assembly for a file
+src/tcpServer.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/tcpServer.cc.s
+.PHONY : src/tcpServer.cc.s
+
 src/thread.o: src/thread.cc.o
 
 .PHONY : src/thread.o
@@ -648,6 +675,9 @@ help:
 	@echo "... src/mutex.o"
 	@echo "... src/mutex.i"
 	@echo "... src/mutex.s"
+	@echo "... src/tcpServer.o"
+	@echo "... src/tcpServer.i"
+	@echo "... src/tcpServer.s"
 	@echo "... src/thread.o"
 	@echo "... src/thread.i"
 	@echo "... src/thread.s"
