@@ -70,17 +70,17 @@ lauxlib.h
 memory
 -
 
-/home/xxx/pro/tests/test.cc
+/home/xxx/proj1/tests/test.cc
 iostream
 -
 src/luaState.h
-/home/xxx/pro/tests/src/luaState.h
+/home/xxx/proj1/tests/src/luaState.h
 assert.h
 -
 string
 -
 src/singleton.hpp
-/home/xxx/pro/tests/src/singleton.hpp
+/home/xxx/proj1/tests/src/singleton.hpp
 sys/socket.h
 -
 sys/epoll.h

@@ -25,6 +25,7 @@ set(LIB_SRC
     src/byteArray.cc
     src/mutex.cc
     src/thread.cc
+    src/address.cc
     )
 
 #添加动态库
@@ -56,6 +57,7 @@ tadpole_add_executable(test_co "tests/test_co.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_yaml "tests/test_yaml.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_byte "tests/test_byte.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_thread "tests/test_thread.cc" tadpole "${LIBS}")
+tadpole_add_executable(test_addr "tests/test_addr.cc" tadpole "${LIBS}")
 
 #可执行文件输出路径
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

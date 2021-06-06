@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "../lib/libtadpole.pdb"
   "../lib/libtadpole.so"
+  "CMakeFiles/tadpole.dir/src/address.cc.o"
   "CMakeFiles/tadpole.dir/src/byteArray.cc.o"
   "CMakeFiles/tadpole.dir/src/config.cc.o"
   "CMakeFiles/tadpole.dir/src/log.cc.o"

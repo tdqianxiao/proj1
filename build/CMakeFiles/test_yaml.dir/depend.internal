@@ -4,4 +4,5 @@
 CMakeFiles/test_yaml.dir/tests/test_yaml.cc.o
  ../3rd/include/yaml/yaml.h
  ../src/config.h
- /home/xxx/pro/tests/test_yaml.cc
+ ../src/mutex.h
+ /home/xxx/proj1/tests/test_yaml.cc

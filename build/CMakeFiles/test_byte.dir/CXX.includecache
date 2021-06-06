@@ -28,15 +28,15 @@ string
 memory
 -
 
-/home/xxx/pro/tests/test_byte.cc
+/home/xxx/proj1/tests/test_byte.cc
 iostream
 -
 assert.h
 -
 src/byteArray.h
-/home/xxx/pro/tests/src/byteArray.h
+/home/xxx/proj1/tests/src/byteArray.h
 string.h
 -
 src/utils.h
-/home/xxx/pro/tests/src/utils.h
+/home/xxx/proj1/tests/src/utils.h
 

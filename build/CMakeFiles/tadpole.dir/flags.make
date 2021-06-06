@@ -6,7 +6,7 @@ CXX_FLAGS =  -rdynamic -O3 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror 
 
 CXX_DEFINES = -Dtadpole_EXPORTS
 
-CXX_INCLUDES = -I/home/xxx/pro/. -I/home/xxx/pro/./3rd/include/lua54 -I/home/xxx/pro/./3rd/include/yaml -I/home/xxx/pro/./3rd/include/co 
+CXX_INCLUDES = -I/home/xxx/proj1/. -I/home/xxx/proj1/./3rd/include/lua54 -I/home/xxx/proj1/./3rd/include/yaml -I/home/xxx/proj1/./3rd/include/co 
 
 # Custom defines: CMakeFiles/tadpole.dir/src/utils.cc.o_DEFINES = __FILE__="src/utils.cc"
 
@@ -23,4 +23,6 @@ CXX_INCLUDES = -I/home/xxx/pro/. -I/home/xxx/pro/./3rd/include/lua54 -I/home/xxx
 # Custom defines: CMakeFiles/tadpole.dir/src/mutex.cc.o_DEFINES = __FILE__="src/mutex.cc"
 
 # Custom defines: CMakeFiles/tadpole.dir/src/thread.cc.o_DEFINES = __FILE__="src/thread.cc"
+
+# Custom defines: CMakeFiles/tadpole.dir/src/address.cc.o_DEFINES = __FILE__="src/address.cc"
 

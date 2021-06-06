@@ -6,7 +6,7 @@ CXX_FLAGS =  -rdynamic -O3 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror 
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/xxx/pro/. -I/home/xxx/pro/./3rd/include/lua54 -I/home/xxx/pro/./3rd/include/yaml -I/home/xxx/pro/./3rd/include/co 
+CXX_INCLUDES = -I/home/xxx/proj1/. -I/home/xxx/proj1/./3rd/include/lua54 -I/home/xxx/proj1/./3rd/include/yaml -I/home/xxx/proj1/./3rd/include/co 
 
 # Custom defines: CMakeFiles/xxx.dir/tests/test.cc.o_DEFINES = __FILE__="tests/test.cc"
 

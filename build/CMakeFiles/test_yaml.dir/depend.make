@@ -3,5 +3,6 @@
 
 CMakeFiles/test_yaml.dir/tests/test_yaml.cc.o: ../3rd/include/yaml/yaml.h
 CMakeFiles/test_yaml.dir/tests/test_yaml.cc.o: ../src/config.h
+CMakeFiles/test_yaml.dir/tests/test_yaml.cc.o: ../src/mutex.h
 CMakeFiles/test_yaml.dir/tests/test_yaml.cc.o: ../tests/test_yaml.cc
 

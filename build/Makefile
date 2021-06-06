@@ -54,10 +54,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/xxx/pro
+CMAKE_SOURCE_DIR = /home/xxx/proj1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/xxx/pro/build
+CMAKE_BINARY_DIR = /home/xxx/proj1/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/xxx/pro/build/CMakeFiles /home/xxx/pro/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xxx/proj1/build/CMakeFiles /home/xxx/proj1/build/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/xxx/pro/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xxx/proj1/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,19 @@ test_thread: cmake_check_build_system
 test_thread/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/build
 .PHONY : test_thread/fast
+
+#=============================================================================
+# Target rules for targets named test_addr
+
+# Build rule for target.
+test_addr: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_addr
+.PHONY : test_addr
+
+# fast build rule for target.
+test_addr/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_addr.dir/build.make CMakeFiles/test_addr.dir/build
+.PHONY : test_addr/fast
 
 #=============================================================================
 # Target rules for targets named test_byte
@@ -193,6 +206,33 @@ tadpole: cmake_check_build_system
 tadpole/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/build
 .PHONY : tadpole/fast
+
+src/address.o: src/address.cc.o
+
+.PHONY : src/address.o
+
+# target to build an object file
+src/address.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/address.cc.o
+.PHONY : src/address.cc.o
+
+src/address.i: src/address.cc.i
+
+.PHONY : src/address.i
+
+# target to preprocess a source file
+src/address.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/address.cc.i
+.PHONY : src/address.cc.i
+
+src/address.s: src/address.cc.s
+
+.PHONY : src/address.s
+
+# target to generate assembly for a file
+src/address.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tadpole.dir/build.make CMakeFiles/tadpole.dir/src/address.cc.s
+.PHONY : src/address.cc.s
 
 src/byteArray.o: src/byteArray.cc.o
 
@@ -437,6 +477,33 @@ tests/test.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/xxx.dir/build.make CMakeFiles/xxx.dir/tests/test.cc.s
 .PHONY : tests/test.cc.s
 
+tests/test_addr.o: tests/test_addr.cc.o
+
+.PHONY : tests/test_addr.o
+
+# target to build an object file
+tests/test_addr.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_addr.dir/build.make CMakeFiles/test_addr.dir/tests/test_addr.cc.o
+.PHONY : tests/test_addr.cc.o
+
+tests/test_addr.i: tests/test_addr.cc.i
+
+.PHONY : tests/test_addr.i
+
+# target to preprocess a source file
+tests/test_addr.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_addr.dir/build.make CMakeFiles/test_addr.dir/tests/test_addr.cc.i
+.PHONY : tests/test_addr.cc.i
+
+tests/test_addr.s: tests/test_addr.cc.s
+
+.PHONY : tests/test_addr.s
+
+# target to generate assembly for a file
+tests/test_addr.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_addr.dir/build.make CMakeFiles/test_addr.dir/tests/test_addr.cc.s
+.PHONY : tests/test_addr.cc.s
+
 tests/test_byte.o: tests/test_byte.cc.o
 
 .PHONY : tests/test_byte.o
@@ -553,12 +620,16 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... test_thread"
+	@echo "... test_addr"
 	@echo "... test_byte"
 	@echo "... test_yaml"
 	@echo "... edit_cache"
 	@echo "... test_co"
 	@echo "... xxx"
 	@echo "... tadpole"
+	@echo "... src/address.o"
+	@echo "... src/address.i"
+	@echo "... src/address.s"
 	@echo "... src/byteArray.o"
 	@echo "... src/byteArray.i"
 	@echo "... src/byteArray.s"
@@ -586,6 +657,9 @@ help:
 	@echo "... tests/test.o"
 	@echo "... tests/test.i"
 	@echo "... tests/test.s"
+	@echo "... tests/test_addr.o"
+	@echo "... tests/test_addr.i"
+	@echo "... tests/test_addr.s"
 	@echo "... tests/test_byte.o"
 	@echo "... tests/test_byte.i"
 	@echo "... tests/test_byte.s"

@@ -62,11 +62,11 @@ string
 memory
 -
 
-/home/xxx/pro/tests/test_thread.cc
+/home/xxx/proj1/tests/test_thread.cc
 src/thread.h
-/home/xxx/pro/tests/src/thread.h
+/home/xxx/proj1/tests/src/thread.h
 unistd.h
 -
 src/log.h
-/home/xxx/pro/tests/src/log.h
+/home/xxx/proj1/tests/src/log.h
 

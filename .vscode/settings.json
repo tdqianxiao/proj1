@@ -45,6 +45,21 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "random": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "array": "cpp",
+        "chrono": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "ratio": "cpp",
+        "set": "cpp",
+        "sstream": "cpp",
+        "stack": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
     }
 }
