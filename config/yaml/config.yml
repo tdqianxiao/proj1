@@ -1,0 +1,20 @@
+logs:
+  - 
+      name: root
+      level: unknow 
+      appends:
+        - StdoutLogAppender:
+           level: unknow
+        - FileLogAppender:
+           level: unknow 
+           path: ./log/root.log
+  -
+      name: system
+      level: unknow 
+      appends:
+        - StdoutLogAppender:
+           level: unknow
+        - FileLogAppender:
+           level: unknow 
+           format: '%d%T%e%T[%c]%T[%p]%T[%F:%l]%T[%t:%f]%T%m%n'
+           path: ./log/system.log
