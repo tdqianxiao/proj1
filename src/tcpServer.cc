@@ -67,12 +67,6 @@ namespace tadpole{
         }
     };
 
-    struct fd_ctx{
-        int fd;
-        stCoRoutine_t *co;
-        TcpServer::ptr server;
-    };
-
     static Logger::ptr logger = TADPOLE_FIND_LOGGER("system");
 
     static ConfigVar<std::vector<AddrInfo> >::ptr g_ip_info = 
@@ -128,26 +122,6 @@ namespace tadpole{
         });
         ctx->server->handle(ctx);
         return nullptr; 
-        // char buf[1024] = {};
-        // for(;;){
-        //     memset(buf,0,sizeof(buf));
-        //     int size = read(ctx->fd,buf,1024);
-        //     //TADPOLE_LOG_DEBUG(logger)<<"read size : "<<size<<" errno"<<errno<<EAGAIN;
-        //     if(size > 0 ){
-        //         TADPOLE_LOG_DEBUG(logger)<< buf ;
-        //         continue;
-        //     }else if (size == 0){
-        //     }else{
-        //         if(errno == EAGAIN){
-        //             struct pollfd pf = { 0 };
-        //             pf.fd = ctx->fd;
-        //             pf.events = (POLLIN|POLLERR|POLLHUP);
-        //             co_poll( co_get_epoll_ct(),&pf,1,1000);
-        //             continue; 
-        //         }
-        //     }
-        //     return nullptr; 
-        // }
     }
 
     void * accept_start(void* arg){
@@ -215,13 +189,15 @@ namespace tadpole{
         }
         TADPOLE_LOG_ERROR(logger)<<"bind & listen : "<<addr->toString()<< " successful !";
         //accept
-        fd_ctx * ctx = (fd_ctx *)calloc(1,sizeof(fd_ctx));
-        stCoRoutine_t * co = nullptr; 
-        co_create(&co,nullptr,accept_start,ctx);
-        ctx->fd = fd; 
-        ctx->co = co;
-        ctx->server = this->shared_from_this();
-        co_resume(co);
+        m_acceptFd.push_back(fd);
+
+        // fd_ctx * ctx = (fd_ctx *)calloc(1,sizeof(fd_ctx));
+        // stCoRoutine_t * co = nullptr; 
+        // co_create(&co,nullptr,accept_start,ctx);
+        // ctx->fd = fd; 
+        // ctx->co = co;
+        // ctx->server = this->shared_from_this();
+        // co_resume(co);
         return fd; 
     }
 

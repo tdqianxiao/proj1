@@ -131,6 +131,8 @@ string
 -
 memory
 -
+vector
+-
 address.h
 ../src/address.h
 

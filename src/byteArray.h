@@ -174,6 +174,7 @@ namespace tadpole{
 		*/
 		void readFloat(float &val);
 		void readDouble(double &val);
+
 	private:
 		//当前写位置
 		char * m_pos ;

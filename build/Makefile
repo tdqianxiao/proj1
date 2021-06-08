@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_file
+
+# Build rule for target.
+test_file: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_file
+.PHONY : test_file
+
+# fast build rule for target.
+test_file/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/build
+.PHONY : test_file/fast
+
+#=============================================================================
 # Target rules for targets named test_thread
 
 # Build rule for target.
@@ -585,6 +598,33 @@ tests/test_co.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_co.dir/build.make CMakeFiles/test_co.dir/tests/test_co.cc.s
 .PHONY : tests/test_co.cc.s
 
+tests/test_file.o: tests/test_file.cc.o
+
+.PHONY : tests/test_file.o
+
+# target to build an object file
+tests/test_file.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/tests/test_file.cc.o
+.PHONY : tests/test_file.cc.o
+
+tests/test_file.i: tests/test_file.cc.i
+
+.PHONY : tests/test_file.i
+
+# target to preprocess a source file
+tests/test_file.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/tests/test_file.cc.i
+.PHONY : tests/test_file.cc.i
+
+tests/test_file.s: tests/test_file.cc.s
+
+.PHONY : tests/test_file.s
+
+# target to generate assembly for a file
+tests/test_file.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/tests/test_file.cc.s
+.PHONY : tests/test_file.cc.s
+
 tests/test_thread.o: tests/test_thread.cc.o
 
 .PHONY : tests/test_thread.o
@@ -646,6 +686,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... test_file"
 	@echo "... test_thread"
 	@echo "... test_addr"
 	@echo "... test_byte"
@@ -696,6 +737,9 @@ help:
 	@echo "... tests/test_co.o"
 	@echo "... tests/test_co.i"
 	@echo "... tests/test_co.s"
+	@echo "... tests/test_file.o"
+	@echo "... tests/test_file.i"
+	@echo "... tests/test_file.s"
 	@echo "... tests/test_thread.o"
 	@echo "... tests/test_thread.i"
 	@echo "... tests/test_thread.s"

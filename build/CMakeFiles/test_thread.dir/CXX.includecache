@@ -53,8 +53,8 @@ pthread.h
 -
 functional
 -
-src/mutex.h
-../src/src/mutex.h
+mutex.h
+../src/mutex.h
 
 ../src/utils.h
 string

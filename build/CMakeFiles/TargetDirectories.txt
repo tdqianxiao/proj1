@@ -1,4 +1,5 @@
 /home/xxx/proj1/build/CMakeFiles/rebuild_cache.dir
+/home/xxx/proj1/build/CMakeFiles/test_file.dir
 /home/xxx/proj1/build/CMakeFiles/test_thread.dir
 /home/xxx/proj1/build/CMakeFiles/test_addr.dir
 /home/xxx/proj1/build/CMakeFiles/test_byte.dir

@@ -59,6 +59,7 @@ CMAKE_BINARY_DIR = /home/xxx/proj1/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/test_file.dir/all
 all: CMakeFiles/test_thread.dir/all
 all: CMakeFiles/test_addr.dir/all
 all: CMakeFiles/test_byte.dir/all
@@ -75,6 +76,7 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/test_file.dir/clean
 clean: CMakeFiles/test_thread.dir/clean
 clean: CMakeFiles/test_addr.dir/clean
 clean: CMakeFiles/test_byte.dir/clean
@@ -86,13 +88,40 @@ clean: CMakeFiles/tadpole.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/test_file.dir
+
+# All Build rule for target.
+CMakeFiles/test_file.dir/all: CMakeFiles/tadpole.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=18,19 "Built target test_file"
+.PHONY : CMakeFiles/test_file.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_file.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xxx/proj1/build/CMakeFiles 13
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_file.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xxx/proj1/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_file.dir/rule
+
+# Convenience name for target.
+test_file: CMakeFiles/test_file.dir/rule
+
+.PHONY : test_file
+
+# clean rule for target.
+CMakeFiles/test_file.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_file.dir/build.make CMakeFiles/test_file.dir/clean
+.PHONY : CMakeFiles/test_file.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/test_thread.dir
 
 # All Build rule for target.
 CMakeFiles/test_thread.dir/all: CMakeFiles/tadpole.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=18,19 "Built target test_thread"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=20,21 "Built target test_thread"
 .PHONY : CMakeFiles/test_thread.dir/all
 
 # Build rule for subdir invocation for target.
@@ -173,7 +202,7 @@ CMakeFiles/test_byte.dir/clean:
 CMakeFiles/test_yaml.dir/all: CMakeFiles/tadpole.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_yaml.dir/build.make CMakeFiles/test_yaml.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_yaml.dir/build.make CMakeFiles/test_yaml.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=20,21 "Built target test_yaml"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=22,23 "Built target test_yaml"
 .PHONY : CMakeFiles/test_yaml.dir/all
 
 # Build rule for subdir invocation for target.
@@ -227,7 +256,7 @@ CMakeFiles/test_co.dir/clean:
 CMakeFiles/xxx.dir/all: CMakeFiles/tadpole.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/xxx.dir/build.make CMakeFiles/xxx.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/xxx.dir/build.make CMakeFiles/xxx.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=22,23 "Built target xxx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xxx/proj1/build/CMakeFiles --progress-num=24,25 "Built target xxx"
 .PHONY : CMakeFiles/xxx.dir/all
 
 # Build rule for subdir invocation for target.

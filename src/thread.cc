@@ -13,7 +13,7 @@ namespace tadpole{
 		return t_thread;
 	}
 
-	Thread::Thread(std::function<void()> cb, const std::string & name)
+	Thread::Thread(std::function<void()> cb,const std::string & name)
 		:m_name(name)
 		,m_cb(cb){
 		int ret = pthread_create(&m_thread,nullptr,&Thread::run,this);	
@@ -27,6 +27,7 @@ namespace tadpole{
 	void * Thread::run(void * arg){
 		t_thread = (Thread*)arg; 
 		t_thread->m_id = GetThreadId();
+		
 
 		pthread_setname_np(pthread_self(), t_thread->m_name.substr(0, 15).c_str());
 		t_thread->m_sem.notify();

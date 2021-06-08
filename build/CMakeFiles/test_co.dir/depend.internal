@@ -3,8 +3,4 @@
 
 CMakeFiles/test_co.dir/tests/test_co.cc.o
  ../3rd/include/co/co_routine.h
- ../src/log.h
- ../src/mutex.h
- ../src/singleton.hpp
- ../src/utils.h
  /home/xxx/proj1/tests/test_co.cc

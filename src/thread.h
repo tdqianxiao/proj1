@@ -5,7 +5,7 @@
 #include <pthread.h>
 #include <functional>
 
-#include "src/mutex.h"
+#include "mutex.h"
 
 namespace tadpole{
 
@@ -22,9 +22,10 @@ public:
 	/**
 	 * @brief 构造函数
 	 * @param[in] cb 回调函数
+	 * @param[in] ctx 协程信息
 	 * @param[in] name 线程名称
 	 */
-	Thread(std::function<void()> cb, const std::string & name = "unknow");
+	Thread(std::function<void()> cb,const std::string & name = "unknow");
 
 	/**
 	 * @brief 析构函数

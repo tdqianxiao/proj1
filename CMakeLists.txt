@@ -59,7 +59,7 @@ tadpole_add_executable(test_yaml "tests/test_yaml.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_byte "tests/test_byte.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_thread "tests/test_thread.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_addr "tests/test_addr.cc" tadpole "${LIBS}")
-
+tadpole_add_executable(test_file "tests/test_file.cc" tadpole "${LIBS}")
 #可执行文件输出路径
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #库文件输出路径
