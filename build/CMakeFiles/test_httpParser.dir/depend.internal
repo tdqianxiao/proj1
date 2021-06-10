@@ -12,4 +12,4 @@ CMakeFiles/test_httpParser.dir/tests/test_httpParser.cc.o
  ../src/singleton.hpp
  ../src/tcpServer.h
  ../src/utils.h
- /home/xxx/main/tests/test_httpParser.cc
+ /home/xxx/proj1/tests/test_httpParser.cc

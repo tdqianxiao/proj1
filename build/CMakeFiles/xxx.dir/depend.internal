@@ -9,4 +9,4 @@ CMakeFiles/xxx.dir/tests/test.cc.o
  ../src/luaRegister.h
  ../src/luaState.h
  ../src/singleton.hpp
- /home/xxx/main/tests/test.cc
+ /home/xxx/proj1/tests/test.cc

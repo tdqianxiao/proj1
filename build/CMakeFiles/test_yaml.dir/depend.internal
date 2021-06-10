@@ -34,4 +34,4 @@ CMakeFiles/test_yaml.dir/tests/test_yaml.cc.o
  ../3rd/include/yaml-cpp/traits.h
  ../3rd/include/yaml-cpp/yaml.h
  ../src/config.h
- /home/xxx/main/tests/test_yaml.cc
+ /home/xxx/proj1/tests/test_yaml.cc

@@ -374,7 +374,7 @@ iostream
 yaml.h
 ../src/yaml.h
 
-/home/xxx/main/tests/test_yaml.cc
+/home/xxx/proj1/tests/test_yaml.cc
 src/config.h
-/home/xxx/main/tests/src/config.h
+/home/xxx/proj1/tests/src/config.h
 

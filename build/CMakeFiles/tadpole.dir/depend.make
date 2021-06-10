@@ -172,8 +172,10 @@ CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/utils.h
 CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/address.h
 CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/config.h
 CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/log.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/singleton.hpp
 CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/tcpServer.cc
 CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/tcpServer.h
+CMakeFiles/tadpole.dir/src/tcpServer.cc.o: ../src/timer.h
 
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/log.h
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/mutex.h
@@ -182,7 +184,13 @@ CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/thread.h
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/utils.h
 CMakeFiles/tadpole.dir/src/thread.cc.o: ../src/thread.cc
 
+CMakeFiles/tadpole.dir/src/timer.cc.o: ../3rd/include/co/co_routine.h
 CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/singleton.hpp
+CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/utils.h
+CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/address.h
+CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/log.h
+CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/singleton.hpp
+CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/tcpServer.h
 CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/timer.cc
 CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/timer.h
 CMakeFiles/tadpole.dir/src/timer.cc.o: ../src/utils.h

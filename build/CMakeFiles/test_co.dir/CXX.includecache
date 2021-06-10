@@ -14,9 +14,9 @@ sys/poll.h
 pthread.h
 -
 
-/home/xxx/main/tests/test_co.cc
+/home/xxx/proj1/tests/test_co.cc
 co_routine.h
-/home/xxx/main/tests/co_routine.h
+/home/xxx/proj1/tests/co_routine.h
 stdio.h
 -
 stdlib.h

@@ -1,6 +1,7 @@
 #include "tcpServer.h"
 #include "config.h"
 #include "log.h"
+#include "timer.h"
 
 int co_accept(int fd, struct sockaddr *addr, socklen_t *len );
 
@@ -300,44 +301,4 @@ namespace tadpole{
         TADPOLE_LOG_INFO(logger)<<"bind & listen : "<<addr->toString()<< " successful";
         return fd;
     }
-
-    
-    // static void *timer_routine( void *arg ){
-    //     co_enable_hook_sys();
-    //     TcpServer::task_t *co = (TcpServer::task_t*)arg;
-    //     for(;;){
-    //         struct pollfd pf = { 0 };
-    //         pf.fd = co->fd;
-    //         pf.events = (POLLIN|POLLERR|POLLHUP);
-    //         int time = TimerMgr::getInstance()->frontMs();
-    //         co_poll( co_get_epoll_ct(),&pf,1,time);
-    //         std::vector<Timer::ptr> timeouts;
-    //         TimerMgr::getInstance()->getTimeoutTimer(timeouts);
-    //         for(auto & it : timeouts){
-    //             it->triggerTimer();
-    //         }
-    //     }
-    //     return 0;
-    // }
-
-    // int TcpServer::initPipe(){
-    //     int ret = pipe(m_tickles);
-    //     if(ret == -1){
-    //         TADPOLE_LOG_ERROR(logger)<<"create pipe fatil ! ";
-    //         return -1;
-    //     }
-    //      //设置读端nonblock
-    //     SetNonBlock(m_tickles[0]);
-
-    //     stCoRoutine_t *timer_co = nullptr;
-    //     TcpServer::task_t * ctx = (TcpServer::task_t *)calloc(1,sizeof(TcpServer::task_t));
-	// 	co_create( &timer_co,nullptr,accept_routine,ctx);
-
-    //     ctx->fd = m_tickles[0];
-    //     ctx->co = timer_co;
-    //     ctx->server = this->shared_from_this();
-
-	// 	co_resume( timer_co );
-    //  }
-
 }

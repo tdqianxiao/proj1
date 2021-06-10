@@ -4,21 +4,21 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/xxx/main/src/address.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/address.cc.o"
-  "/home/xxx/main/src/byteArray.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/byteArray.cc.o"
-  "/home/xxx/main/src/config.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/config.cc.o"
-  "/home/xxx/main/src/http/http11_parser.rl.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/http/http11_parser.rl.cc.o"
-  "/home/xxx/main/src/http/http_request.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/http/http_request.cc.o"
-  "/home/xxx/main/src/http/http_responce.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/http/http_responce.cc.o"
-  "/home/xxx/main/src/http/httpclient_parser.rl.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/http/httpclient_parser.rl.cc.o"
-  "/home/xxx/main/src/log.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/log.cc.o"
-  "/home/xxx/main/src/luaRegister.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/luaRegister.cc.o"
-  "/home/xxx/main/src/luaState.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/luaState.cc.o"
-  "/home/xxx/main/src/mutex.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/mutex.cc.o"
-  "/home/xxx/main/src/tcpServer.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/tcpServer.cc.o"
-  "/home/xxx/main/src/thread.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/thread.cc.o"
-  "/home/xxx/main/src/timer.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/timer.cc.o"
-  "/home/xxx/main/src/utils.cc" "/home/xxx/main/build/CMakeFiles/tadpole.dir/src/utils.cc.o"
+  "/home/xxx/proj1/src/address.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/address.cc.o"
+  "/home/xxx/proj1/src/byteArray.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/byteArray.cc.o"
+  "/home/xxx/proj1/src/config.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/config.cc.o"
+  "/home/xxx/proj1/src/http/http11_parser.rl.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/http/http11_parser.rl.cc.o"
+  "/home/xxx/proj1/src/http/http_request.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/http/http_request.cc.o"
+  "/home/xxx/proj1/src/http/http_responce.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/http/http_responce.cc.o"
+  "/home/xxx/proj1/src/http/httpclient_parser.rl.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/http/httpclient_parser.rl.cc.o"
+  "/home/xxx/proj1/src/log.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/log.cc.o"
+  "/home/xxx/proj1/src/luaRegister.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/luaRegister.cc.o"
+  "/home/xxx/proj1/src/luaState.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/luaState.cc.o"
+  "/home/xxx/proj1/src/mutex.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/mutex.cc.o"
+  "/home/xxx/proj1/src/tcpServer.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/tcpServer.cc.o"
+  "/home/xxx/proj1/src/thread.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/thread.cc.o"
+  "/home/xxx/proj1/src/timer.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/timer.cc.o"
+  "/home/xxx/proj1/src/utils.cc" "/home/xxx/proj1/build/CMakeFiles/tadpole.dir/src/utils.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,7 +1,13 @@
 #include "timer.h"
 #include "utils.h"
+#include "tcpServer.h"
+#include "log.h"
+
+#include <exception>
 
 namespace tadpole{
+    static Logger::ptr logger = TADPOLE_FIND_LOGGER("system");
+
     Timer::Timer(uint32_t ms,std::function<void()> cb,bool isForever)
         :m_cb(cb)
         ,m_isForever(isForever){
@@ -35,6 +41,13 @@ namespace tadpole{
         uint32_t ms = m_end - m_begin;
         m_begin = cur; 
         m_end = cur + ms;
+    }
+
+    TimerManagers::TimerManagers(){
+        int ret = init();
+        if(ret == -1){
+            throw std::logic_error("TimerManagers init error !");
+        }
     }
 
     int TimerManagers::frontMs(){
@@ -86,5 +99,40 @@ namespace tadpole{
                 m_timers.insert(it);
             }
         }
+    }
+
+    
+    static void *timer_routine( void *arg ){
+        co_enable_hook_sys();
+        TcpServer::task_t *co = (TcpServer::task_t*)arg;
+        for(;;){
+            struct pollfd pf = { 0 };
+            pf.fd = co->fd;
+            pf.events = (POLLIN|POLLERR|POLLHUP);
+            int time = TimerMgr::GetInstance()->frontMs();
+            co_poll( co_get_epoll_ct(),&pf,1,time);
+            TimerMgr::GetInstance()->checkExpire();
+        }
+        return 0;
+    }
+
+    int TimerManagers::init(){
+        int ret = pipe(m_tickles);
+        if(ret == -1){
+            TADPOLE_LOG_ERROR(logger)<<"create pipe fatil ! ";
+            return -1;
+        }
+         //设置读端nonblock
+        TcpServer::SetNonBlock(m_tickles[0]);
+
+        stCoRoutine_t *timer_co = nullptr;
+        TcpServer::task_t * ctx = (TcpServer::task_t *)calloc(1,sizeof(TcpServer::task_t));
+		co_create( &timer_co,nullptr,timer_routine,ctx);
+
+        ctx->fd = m_tickles[0];
+        ctx->co = timer_co;
+
+		co_resume( timer_co );
+        return 0;
     }
 }

@@ -8,4 +8,4 @@ CMakeFiles/test_echoServer.dir/tests/test_echoServer.cc.o
  ../src/singleton.hpp
  ../src/tcpServer.h
  ../src/utils.h
- /home/xxx/main/tests/test_echoServer.cc
+ /home/xxx/proj1/tests/test_echoServer.cc

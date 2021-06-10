@@ -56,6 +56,10 @@ namespace tadpole{
         typedef std::shared_ptr<TimerManagers> ptr;
         typedef typename std::set<Timer::ptr,Timer::Compare> SetType;
 
+        TimerManagers();
+
+        int init();
+
         int frontMs();
 
         int delTimer(Timer::ptr timer);
@@ -66,6 +70,7 @@ namespace tadpole{
         void checkExpire();
     private:
         SetType m_timers;
+        int m_tickles[2];
     };
 
     typedef Singleton<TimerManagers> TimerMgr;

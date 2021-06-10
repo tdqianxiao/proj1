@@ -68,7 +68,6 @@ namespace tadpole{
         bool m_flag;                        //是否绑定成功
         std::stack<task_t*> m_readWrite;
         std::vector<int> m_listenFd;
-        //int m_tickles[2];                   //通知
     };
 }
 
