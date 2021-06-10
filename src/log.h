@@ -15,7 +15,7 @@
 
 #include "src/singleton.hpp"
 #include "src/utils.h"
-#include "src/mutex.h"
+
 /**
  * @根据日志级别打印不同级别的日志
  */
@@ -437,16 +437,6 @@ public:
 	 * @brief 类型定义，日志器类的智能指针
 	 */
 	typedef std::shared_ptr<Logger> ptr;
-
-	/** 
-	 * @brief 互斥锁
-	 */
-	typedef Mutex MutexType;
-
-	/** 
-	 * @brief 读写锁
-	 */
-	typedef RWMutex MutexType2;
 public:
 	/**
 	 * @brief 构造函数
@@ -537,12 +527,6 @@ private:
 
 	//日志级别
 	LogLevel::Level m_level = LogLevel::UNKNOW;
-
-	//互斥锁
-	MutexType m_lock; 
-
-	//读写锁
-	MutexType2 m_rwlock;
 };
 
 struct LogDef;
@@ -550,8 +534,6 @@ struct LogDef;
  * @brief 日志器管理类
  */
 class LoggerMgr{
-public:
-	typedef RWMutex MutexType;
 public:
 	/**
 	 * @brief 获得日志器,没有会自动创建
@@ -574,9 +556,6 @@ private:
 	 * @brief 日志器map 
 	 */
 	std::map<std::string,Logger::ptr> m_loggers ; 
-
-	///读写锁
-	MutexType m_lock;
 };
 
 /**

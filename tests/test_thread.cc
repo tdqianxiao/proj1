@@ -25,6 +25,6 @@ int main (int argv,char ** argc){
         std::cout<<th2->getThreadId()<<"------"<<th2->getThreadName()<<std::endl;
     }
 
-    while(1);
+    while(1){}
 	return 0;	
 }

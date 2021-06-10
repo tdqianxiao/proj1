@@ -1,16 +1,8 @@
-#include "co_routine.h"
-
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <sys/un.h>
-#include <fcntl.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <errno.h>
-
 #include "tcpServer.h"
 #include "config.h"
 #include "log.h"
+
+int co_accept(int fd, struct sockaddr *addr, socklen_t *len );
 
 namespace tadpole{
     struct AddrInfo{
@@ -72,16 +64,201 @@ namespace tadpole{
     static ConfigVar<std::vector<AddrInfo> >::ptr g_ip_info = 
         Config::Lookup<std::vector<AddrInfo> >("tcp.address",std::vector<AddrInfo>(),"server bind ip or unixaddr");
 
-    class TcpServerIniter{
-    public:
-        TcpServerIniter(){
+    struct IpInfoIniter{
+        IpInfoIniter(){
             Config::LoadFromYaml("./config/yaml/addr.yml");
         }
     };
-    TcpServerIniter __tcpServerIniter;
+    static IpInfoIniter __ipInfoIniter;
 
-    int SetNonBlock(int iSock)
-    {
+    static void *readwrite_routine( void *arg ){
+        co_enable_hook_sys();
+        TcpServer::task_t *co = (TcpServer::task_t*)arg;
+        for(;;){
+            if( -1 == co->fd ){
+                co->server->push( co );
+                co_yield_ct();
+                continue;
+            }
+            int fd = co->fd;
+            co->fd = -1;
+            for(;;){
+                struct pollfd pf = { 0 };
+                pf.fd = fd;
+                pf.events = (POLLIN|POLLERR|POLLHUP);
+                co_poll( co_get_epoll_ct(),&pf,1,1000);
+
+                int ret = co->server->handle(fd);
+                if(ret == -1){
+                    close( fd );
+                    break; 
+                }
+            }
+        }
+        return 0;
+    }
+
+    static void *accept_routine( void * arg){
+        co_enable_hook_sys();
+        TcpServer::task_t * ctx = (TcpServer::task_t*)arg;
+        for(;;){
+            if( ctx->server->empty() ){
+                struct pollfd pf = { 0 };
+                pf.fd = -1;
+                poll( &pf,1,1000);
+                continue;
+            }
+            int fd = co_accept(ctx->fd,nullptr,nullptr);
+            if( fd < 0 ){
+                struct pollfd pf = { 0 };
+                pf.fd = ctx->fd;
+                pf.events = (POLLIN|POLLERR|POLLHUP);
+                co_poll( co_get_epoll_ct(),&pf,1,1000 );
+                continue;
+            }
+            if( ctx->server->empty() ){
+                close( fd );
+                continue;
+            }
+            TcpServer::SetNonBlock( fd );
+            TcpServer::task_t *co = ctx->server->erase();
+            co->fd = fd;
+            co_resume( co->co );
+        }
+        return 0;
+    }
+
+    TcpServer::TcpServer(int ant)
+        :m_ant(ant){
+        init();
+    }
+
+    TcpServer::~TcpServer(){
+
+    }
+
+    int TcpServer::handle(int fd){
+        char buf[1024*128] = {0};
+        int ret = read( fd,buf,sizeof(buf) );
+        if( ret > 0 ){
+            ret = write( fd,buf,ret );
+        }
+        if( ret <= 0 ){
+            if (errno == EAGAIN){
+                return 0;
+            }
+            return -1;
+        }
+        return 0; 
+    }
+
+    void TcpServer::init(){
+        std::vector<AddrInfo> info = g_ip_info->getValue();
+        for(auto & it : info){
+            if(!it.ip.empty() && it.port != 0){
+                int fd = CSByIP(it.ip,it.port);
+                if(fd != -1){
+                    m_listenFd.push_back(fd);
+                    m_flag = true ;
+                }
+            }
+            if(!it.unix.empty()){
+                int fd = CSByUnixAddr(it.unix);
+                if(fd != -1){
+                    m_listenFd.push_back(fd);
+                    m_flag = true ;
+                }
+            }
+        }
+    }
+
+    void TcpServer::start(){
+        if(m_flag){
+            //开启readwrite任务
+            startReadWrite();
+            //开启accept任务
+            for(auto & it : m_listenFd){
+                startAccept(it);
+            }
+            TADPOLE_LOG_INFO(logger)<<"start service";
+            //进入epoll循环
+            co_eventloop( co_get_epoll_ct(),0,0 );
+        }
+    }
+
+    void TcpServer::startReadWrite(){
+        for(int i=0 ; i<m_ant ; i++){
+			task_t * task = (task_t*)calloc( 1,sizeof(task_t) );
+			task->fd = -1;
+            task->server = this->shared_from_this();
+			co_create( &(task->co),nullptr,readwrite_routine,task );
+			co_resume( task->co );
+		}
+    }
+
+    void TcpServer::startAccept(int fd){
+        stCoRoutine_t *accept_co = nullptr;
+        TcpServer::task_t * ctx = (TcpServer::task_t *)calloc(1,sizeof(TcpServer::task_t));
+		co_create( &accept_co,nullptr,accept_routine,ctx);
+
+        ctx->fd = fd;
+        ctx->co = accept_co;
+        ctx->server = this->shared_from_this();
+
+		co_resume( accept_co );
+    }
+
+    void TcpServer::push(TcpServer::task_t * task){
+        m_readWrite.push(task);
+    }
+
+    bool TcpServer::empty(){
+        return m_readWrite.empty();
+    }
+
+    TcpServer::task_t * TcpServer::erase(){
+        task_t * task = m_readWrite.top();
+        m_readWrite.pop();
+        return task;
+    }
+
+    int checkUnix(const std::string & path){
+        return 0; 
+    }
+
+    int checkIP(const std::string & ip,uint16_t port){
+        return 0;
+    }
+
+    int TcpServer::CSByUnixAddr(const std::string & path){
+        if(checkUnix(path) != 0){
+            TADPOLE_LOG_ERROR(logger)<<"unix path: "<<path<<" error !";
+            return -1;
+        }
+        remove(path.c_str());
+        Address::ptr addr(new UnixAddress(path));
+        int fd = bind(addr);
+        if(fd == -1){
+            return -1;
+        }
+        return fd;
+    }
+
+    int TcpServer::CSByIP(const std::string & ip,uint16_t port){
+        if(checkIP(ip,port) != 0){
+            TADPOLE_LOG_ERROR(logger)<<"ip and port: "<<ip<<":"<<port<<" error !";
+            return -1;
+        }
+        Address::ptr addr = IPv4Address::Create(ip.c_str(),port);
+        int fd = bind(addr);
+        if(fd == -1){
+            TADPOLE_LOG_ERROR(logger)<<"init "<<addr->toString()<<" error !";
+            return -1;
+        }
+        return fd;
+    }
+
+    int TcpServer::SetNonBlock(int iSock){
         int iFlags;
         iFlags = fcntl(iSock, F_GETFL, 0);
         iFlags |= O_NONBLOCK;
@@ -89,75 +266,8 @@ namespace tadpole{
         int ret = fcntl(iSock, F_SETFL, iFlags);
         return ret;
     }
-
-    void TcpServer::handle(fd_ctx * ctx){
-        char buf[1024] = {};
-        for(;;){
-            memset(buf,0,sizeof(buf));
-            int size = read(ctx->fd,buf,1024);
-            //TADPOLE_LOG_DEBUG(logger)<<"read size : "<<size<<" errno"<<errno<<EAGAIN;
-            if(size > 0 ){
-                TADPOLE_LOG_DEBUG(logger)<< buf ;
-                continue;
-            }else if (size == 0){
-            }else{
-                if(errno == EAGAIN){
-                    struct pollfd pf = { 0 };
-                    pf.fd = ctx->fd;
-                    pf.events = (POLLIN|POLLERR|POLLHUP);
-                    co_poll( co_get_epoll_ct(),&pf,1,1000);
-                    continue; 
-                }
-            }
-            return ; 
-        }
-    }
-
-    void* write_start(void * arg){ 
-        co_enable_hook_sys();
-        fd_ctx * ctx = (fd_ctx*) arg;
-        std::shared_ptr<int> cb(new int,[ctx](void * ptr){
-            close(ctx->fd);
-            free(ptr);
-        });
-        ctx->server->handle(ctx);
-        return nullptr; 
-    }
-
-    void * accept_start(void* arg){
-        co_enable_hook_sys();
-        fd_ctx * ctx = (fd_ctx*)arg;
-        for(;;){
-            struct pollfd pf = { 0 };
-            pf.fd = ctx->fd;
-            pf.events = (POLLIN|POLLERR|POLLHUP);
-            co_poll( co_get_epoll_ct(),&pf,1,1000);
-            int fd = accept(ctx->fd,nullptr,nullptr);
-            if(fd == -1){
-                continue;
-            }
-            SetNonBlock(fd);
-            fd_ctx* cctx = (fd_ctx *)calloc(1,sizeof(fd_ctx));
-            stCoRoutine_t * co = nullptr; 
-            cctx->fd = fd ;
-            cctx->co = co ;
-            cctx->server = ctx->server;
-            co_create(&co,nullptr,write_start,cctx);
-            co_resume(co);
-        }
-        return nullptr;
-    }
-
-    int checkUnix(const std::string & path){
-        return 0;
-    }
-
-    int checkIP(const std::string & ip,uint16_t port){
-        return 0;
-    }
-   
-
-    int TcpServer::ServerInit(Address::ptr addr){
+        
+    int TcpServer::bind(Address::ptr addr){
         assert(addr);
         int fd = socket(addr->getFamily(),SOCK_STREAM,0);
         if(fd == -1){
@@ -173,7 +283,7 @@ namespace tadpole{
             TADPOLE_LOG_ERROR(logger)<<"fcntl fd errno : "<<errno<< " errstr: "<<strerror(errno);
             return -1;
         }
-        ret = bind(fd,addr->getAddr(),addr->getAddrLen());
+        ret = ::bind(fd,addr->getAddr(),addr->getAddrLen());
         if(ret == -1){
             //TODO error 
             TADPOLE_LOG_ERROR(logger)<<"bind fd errno : "<<errno<< " errstr: "<<strerror(errno);
@@ -187,77 +297,47 @@ namespace tadpole{
             close(fd);
             return -1;
         }
-        TADPOLE_LOG_ERROR(logger)<<"bind & listen : "<<addr->toString()<< " successful !";
-        //accept
-        m_acceptFd.push_back(fd);
-
-        // fd_ctx * ctx = (fd_ctx *)calloc(1,sizeof(fd_ctx));
-        // stCoRoutine_t * co = nullptr; 
-        // co_create(&co,nullptr,accept_start,ctx);
-        // ctx->fd = fd; 
-        // ctx->co = co;
-        // ctx->server = this->shared_from_this();
-        // co_resume(co);
-        return fd; 
+        TADPOLE_LOG_INFO(logger)<<"bind & listen : "<<addr->toString()<< " successful";
+        return fd;
     }
 
-    TcpServer::TcpServer(){
-        
-    }
+    
+    // static void *timer_routine( void *arg ){
+    //     co_enable_hook_sys();
+    //     TcpServer::task_t *co = (TcpServer::task_t*)arg;
+    //     for(;;){
+    //         struct pollfd pf = { 0 };
+    //         pf.fd = co->fd;
+    //         pf.events = (POLLIN|POLLERR|POLLHUP);
+    //         int time = TimerMgr::getInstance()->frontMs();
+    //         co_poll( co_get_epoll_ct(),&pf,1,time);
+    //         std::vector<Timer::ptr> timeouts;
+    //         TimerMgr::getInstance()->getTimeoutTimer(timeouts);
+    //         for(auto & it : timeouts){
+    //             it->triggerTimer();
+    //         }
+    //     }
+    //     return 0;
+    // }
 
-    TcpServer::~TcpServer(){
+    // int TcpServer::initPipe(){
+    //     int ret = pipe(m_tickles);
+    //     if(ret == -1){
+    //         TADPOLE_LOG_ERROR(logger)<<"create pipe fatil ! ";
+    //         return -1;
+    //     }
+    //      //设置读端nonblock
+    //     SetNonBlock(m_tickles[0]);
 
-    }
+    //     stCoRoutine_t *timer_co = nullptr;
+    //     TcpServer::task_t * ctx = (TcpServer::task_t *)calloc(1,sizeof(TcpServer::task_t));
+	// 	co_create( &timer_co,nullptr,accept_routine,ctx);
 
-    int TcpServer::CSByUnixAddr(const std::string & path){
-        if(checkUnix(path) != 0){
-            TADPOLE_LOG_ERROR(logger)<<"unix path: "<<path<<" error !";
-            return -1;
-        }
-        int ret = remove(path.c_str());
-        if(ret == 0){
-            TADPOLE_LOG_ERROR(logger)<<"Remove: "<<path;
-        }
-        Address::ptr addr(new UnixAddress(path));
-        if(ServerInit(addr) == -1){
-            return -1;
-        }
-        TADPOLE_LOG_ERROR(logger)<<addr->toString()<<" start service !";
-        return 0;
-    }
+    //     ctx->fd = m_tickles[0];
+    //     ctx->co = timer_co;
+    //     ctx->server = this->shared_from_this();
 
-    int TcpServer::CSByIP(const std::string & ip,uint16_t port){
-        if(checkIP(ip,port) != 0){
-            TADPOLE_LOG_ERROR(logger)<<"ip and port: "<<ip<<":"<<port<<" error !";
-            return -1;
-        }
-        Address::ptr addr = IPv4Address::Create(ip.c_str(),port);
-         if(ServerInit(addr) == -1){
-            TADPOLE_LOG_ERROR(logger)<<"init "<<addr->toString()<<" error !";
-            return -1;
-        }
-        TADPOLE_LOG_ERROR(logger)<<addr->toString()<<" start service !";
-        return 0;
-    }
+	// 	co_resume( timer_co );
+    //  }
 
-    void TcpServer::start(){
-        std::vector<AddrInfo> info = g_ip_info->getValue();
-        bool flag = false;
-        for(auto & it : info){
-            if(!it.ip.empty() && it.port != 0){
-                if(CSByIP(it.ip,it.port) == 0){
-                    flag = true ;
-                }
-            }
-            if(!it.unix.empty()){
-                if(CSByUnixAddr(it.unix)){
-                    flag = true ;
-                }
-            }
-        }
-        if(flag == true){
-            TADPOLE_LOG_DEBUG(logger)<<"start server success!";
-            co_eventloop(co_get_epoll_ct(),0,0);
-        }
-    }
 }

@@ -25,14 +25,9 @@ void Config::InitFromYaml(const YAML::Node & node,const std::string &prefix, std
 }
 
 void Config::LookupData(std::map<std::string , std::string> & configItems){
-	RWMutex::RDLock lock(GetMutex());
 	auto &data = GetData();
-	lock.unlock();
 	for(auto &it : configItems){
-		lock.lock();
 		auto iter = data.find(it.first);
-		lock.unlock();
-		RWMutex::WRLock lock2(GetMutex());
 		if(iter != data.end()){
 			iter->second->fromString(it.second);	
 		}

@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/bswap.hpp
+byteswap.h
+-
+stdint.h
+-
+
+../src/byteArray.h
+memory
+-
+vector
+-
+sys/types.h
+-
+src/bswap.hpp
+../src/src/bswap.hpp
+
+../src/utils.h
+string
+-
+memory
+-
+
+/home/xxx/main/tests/test_byte.cc
+iostream
+-
+assert.h
+-
+src/byteArray.h
+/home/xxx/main/tests/src/byteArray.h
+string.h
+-
+src/utils.h
+/home/xxx/main/tests/src/utils.h
+

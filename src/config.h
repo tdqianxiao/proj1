@@ -12,7 +12,6 @@
 #include <iostream>
 
 #include "yaml.h"
-#include "src/mutex.h"
 
 namespace tadpole{
 
@@ -106,7 +105,7 @@ public:
 	std::string operator()(std::vector<T> val){
 		YAML::Node node; 
 		std::stringstream ss; 
-		for(int i = 0 ; i < val.size(); ++i){
+		for(size_t i = 0 ; i < val.size(); ++i){
 			node[i] = LexicalCast<T,std::string>()(val[i]);
 		}
 		ss << node;
@@ -347,11 +346,6 @@ public:
 	* @brief 类型定义，ConfigVar的智能指针
  	*/
 	typedef std::shared_ptr<ConfigVar> ptr;
-
-	/**
-	 * @brief 类型定义，锁的类型
-	 */
-	typedef Mutex MutexType;
 	
 	/**
 	 * @brief 构造函数
@@ -373,7 +367,6 @@ public:
 	 */
 	std::string toString()override{
 		try{
-			MutexType::Lock lock(m_mutex);
 			return LexicalCast<T,std::string>()(m_val);
 		}catch(...){
 			std::cout<< "lexical_cast error : "<<
@@ -392,7 +385,6 @@ public:
 			if(m_cb){
 				m_cb(m_val,temp_val);
 			}
-			MutexType::Lock lock(m_mutex);
 			m_val = temp_val;
 		}catch(...){
 			std::cout<< "lexical_cast error : string convent to "<<
@@ -418,8 +410,6 @@ private:
 	T m_val ; 
 	//监听回调函数
 	std::function<void(const T& old_val , const T& new_val)> m_cb;
-	//锁
-	MutexType m_mutex;
 };
 
 /**
@@ -437,12 +427,9 @@ public:
 	template <class T>
 	static typename ConfigVar<T>::ptr Lookup(const std::string & name 
 		, const T & val , const std::string & description = ""){
-		RWMutex::RDLock lock(GetMutex());
 		auto &data = GetData();
 		auto it = data.find(name);
-		lock.unlock();
 		typename ConfigVar<T>::ptr conf(new ConfigVar<T>(name , val , description));
-		RWMutex::WRLock lock2(GetMutex());
 		if(it == data.end()){
 			data.insert(std::make_pair(name,conf));
 		}else{
@@ -477,11 +464,6 @@ private:
 	static std::map<std::string,ConfigVarBase::ptr>& GetData(){
 		static std::map<std::string,ConfigVarBase::ptr> s_data;
 		return s_data;
-	}
-
-	static RWMutex & GetMutex(){
-		static RWMutex m_mutex;
-		return m_mutex;
 	}
 };
 

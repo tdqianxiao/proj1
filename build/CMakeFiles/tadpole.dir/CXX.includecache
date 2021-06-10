@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/xxx/main/src/singleton.hpp
+memory
+-
+
+/home/xxx/main/src/timer.cc
+timer.h
+/home/xxx/main/src/timer.h
+utils.h
+/home/xxx/main/src/utils.h
+
+/home/xxx/main/src/timer.h
+set
+-
+vector
+-
+memory
+-
+singleton.hpp
+/home/xxx/main/src/singleton.hpp
+
+/home/xxx/main/src/utils.h
+string
+-
+memory
+-
+

@@ -4,6 +4,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <sys/syscall.h>
+#include <dirent.h>
 
 #include "utils.h"
 #include "log.h"
@@ -87,4 +88,21 @@ namespace tadpole{
         return printer;
     }
 
+   void TravDir(const std::string & dirname,std::function<void(const std::string & name)> cb = nullptr){
+        DIR * dir= opendir(dirname.c_str());
+        struct dirent * file ; 
+        while((file = readdir(dir)) != nullptr){
+            if(file->d_name[0] == '.'){
+                continue; 
+            }
+
+            if(file->d_type == DT_DIR){
+                TravDir(dirname + "/" +std::string(file->d_name),cb);	
+                continue;
+            }
+            if(cb){
+                cb(dirname + "/" +std::string(file->d_name));	
+            }
+        }
+    }
 }

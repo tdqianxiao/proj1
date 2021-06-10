@@ -222,10 +222,8 @@ Logger::Logger(const std::string & name)
 void Logger::log(LogLevel::Level level , LogEvent::ptr event){
 	event->setLoggerName(m_name);
 	if(level >= m_level){
-		MutexType2::RDLock m_rdlock(m_rwlock);
 		for(auto & it : m_logAppenders){
 			if(level >= it->getLevel()){
-				MutexType::Lock lock(m_lock);
 				it->format(level,event);
 			}
 		}
@@ -234,17 +232,13 @@ void Logger::log(LogLevel::Level level , LogEvent::ptr event){
 
 void Logger::addAppender(LogAppender::ptr append){
 	if(append){
-		MutexType2::WRLock wrlock(m_rwlock);
 		m_logAppenders.push_back(append);
 	}
 }
 
 void Logger::delAppender(LogAppender::ptr append){
-	MutexType2::RDLock m_rdlock(m_rwlock);
 	for(auto it = m_logAppenders.begin(); it != m_logAppenders.end();++it){
 		if(*it == append){
-			m_rdlock.unlock();
-			MutexType2::WRLock wrlock(m_rwlock);
 			m_logAppenders.erase(it);
 			return ; 
 		}
@@ -252,7 +246,6 @@ void Logger::delAppender(LogAppender::ptr append){
 }
 
 void Logger::clearAppender(){
-	MutexType2::WRLock wrlock(m_rwlock);
 	m_logAppenders.clear();
 }
 
@@ -408,13 +401,9 @@ LogFormatter::LogFormatter(const std::string& pattern)
 }
 
 Logger::ptr LoggerMgr::getLogger(const std::string & name){
-	MutexType::RDLock rdlock(m_lock);
 	auto it = m_loggers.find(name);
 	if(it == m_loggers.end()){
-		rdlock.unlock();
 		auto logger = Logger::ptr(new Logger(name));
-		//logger->addAppender(LogAppender::ptr(new StdoutLogAppender()));
-		MutexType::RDLock wrlock(m_lock);
 		m_loggers.insert(make_pair(name,logger));
 		return logger;
 	}

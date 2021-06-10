@@ -29,6 +29,6 @@ int loadFile(const std::string & path){
 }
 
 int main(){
-    loadFile("./test/xxx.jpeg");
+    loadFile("./test.jpeg");
     return 0;
 }

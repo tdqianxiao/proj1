@@ -5,13 +5,13 @@ project(tadpole)
 include (utils.cmake)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O3 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations")
-set(CMAKE_C_FLAGS "$ENV{CXXFLAGS} -rdynamic -O3 -fPIC -ggdb -std=c11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations")
+set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations")
+set(CMAKE_C_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -fPIC -ggdb -std=c11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations")
 
 #包含目录
 include_directories(.)
 include_directories(./3rd/include/lua54)
-include_directories(./3rd/include/yaml)
+include_directories(./3rd/include/yaml-cpp)
 include_directories(./3rd/include/co)
 
 
@@ -27,7 +27,13 @@ set(LIB_SRC
     src/thread.cc
     src/address.cc
     src/tcpServer.cc
+	src/timer.cc
+    src/http/http_request.cc
+    src/http/http_responce.cc
     )
+
+ragelmaker(src/http/http11_parser.rl LIB_SRC ${PROJECT_SOURCE_DIR}/src/http)
+ragelmaker(src/http/httpclient_parser.rl LIB_SRC ${PROJECT_SOURCE_DIR}/src/http)
 
 #添加动态库
 add_library(tadpole SHARED ${LIB_SRC})
@@ -58,8 +64,10 @@ tadpole_add_executable(test_co "tests/test_co.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_yaml "tests/test_yaml.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_byte "tests/test_byte.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_thread "tests/test_thread.cc" tadpole "${LIBS}")
-tadpole_add_executable(test_addr "tests/test_addr.cc" tadpole "${LIBS}")
+tadpole_add_executable(test_echoServer "tests/test_echoServer.cc" tadpole "${LIBS}")
 tadpole_add_executable(test_file "tests/test_file.cc" tadpole "${LIBS}")
+tadpole_add_executable(test_httpParser "tests/test_httpParser.cc" tadpole "${LIBS}")
+
 #可执行文件输出路径
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #库文件输出路径
